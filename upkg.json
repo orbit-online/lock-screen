@@ -1,0 +1,10 @@
+{
+  "commands": {
+    "lock-screen": "lock-screen.sh"
+  },
+  "dependencies": {
+    "orbit-online/records.sh": "v0.9.3",
+    "orbit-online/checkdeps": "v1.0.0",
+    "andsens/docopt.sh": "v1.0.0-upkg"
+  }
+}
