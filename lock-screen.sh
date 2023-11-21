@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
 lock_screen() {
-  set -eo pipefail
-  shopt -s inherit_errexit
-  local pkgroot
-  pkgroot=$(upkg root "${BASH_SOURCE[0]}")
+  set -eo pipefail; shopt -s inherit_errexit
+  local pkgroot; pkgroot=$(upkg root "${BASH_SOURCE[0]}")
   PATH="$pkgroot/.upkg/.bin:$PATH"
-  # shellcheck source=.upkg/orbit-online/records.sh/records.sh
   source "$pkgroot/.upkg/orbit-online/records.sh/records.sh"
 
   DOC="lock-screen - Lock the screen unless a key is held
