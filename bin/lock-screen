@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+# shellcheck source-path=..
 
 lock_screen() {
   set -eo pipefail; shopt -s inherit_errexit
-  local pkgroot; pkgroot=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
+  local pkgroot; pkgroot=$(realpath "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/..")
   PATH=$("$pkgroot/.upkg/.bin/path_prepend" "$pkgroot/.upkg/.bin")
-  source "$pkgroot/.upkg/orbit-online/records.sh/records.sh"
+  # shellcheck disable=SC1091
+  source "$pkgroot/.upkg/records.sh/records.sh"
 
   DOC="lock-screen - Lock the screen unless a key is held
 Usage:
@@ -23,29 +25,24 @@ Note:
   REASON is the reason for why the screen is being locked and will be the
     notification title
 "
-# docopt parser below, refresh this parser with `docopt.sh lock-screen.sh`
-# shellcheck disable=2016,1090,1091,2034
-docopt() { source "$pkgroot/.upkg/andsens/docopt.sh/docopt-lib.sh" '1.0.0' || {
-ret=$?; printf -- "exit %d\n" "$ret"; exit "$ret"; }; set -e
-trimmed_doc=${DOC:0:634}; usage=${DOC:51:54}; digest=45a52; shorts=('' '')
-longs=(--key --key-desc); argcounts=(1 1); node_0(){ value __key 0; }; node_1(){
-value __key_desc 1; }; node_2(){ value USERNAME a; }; node_3(){ value TIMEOUT a
-}; node_4(){ value REASON a; }; node_5(){ optional 0 1; }; node_6(){ optional 5
-}; node_7(){ required 6 2 3 4; }; node_8(){ required 7; }
-cat <<<' docopt_exit() { [[ -n $1 ]] && printf "%s\n" "$1" >&2
-printf "%s\n" "${DOC:51:54}" >&2; exit 1; }'; unset var___key var___key_desc \
-var_USERNAME var_TIMEOUT var_REASON; parse 8 "$@"
-local prefix=${DOCOPT_PREFIX:-''}; unset "${prefix}__key" \
-"${prefix}__key_desc" "${prefix}USERNAME" "${prefix}TIMEOUT" "${prefix}REASON"
-eval "${prefix}"'__key=${var___key:-KEY_LEFTSHIFT}'
-eval "${prefix}"'__key_desc=${var___key_desc:-shift}'
-eval "${prefix}"'USERNAME=${var_USERNAME:-}'
-eval "${prefix}"'TIMEOUT=${var_TIMEOUT:-}'
-eval "${prefix}"'REASON=${var_REASON:-}'; local docopt_i=1
-[[ $BASH_VERSION =~ ^4.3 ]] && docopt_i=2; for ((;docopt_i>0;docopt_i--)); do
-declare -p "${prefix}__key" "${prefix}__key_desc" "${prefix}USERNAME" \
-"${prefix}TIMEOUT" "${prefix}REASON"; done; }
-# docopt parser above, complete command for generating this parser is `docopt.sh --library='"$pkgroot/.upkg/andsens/docopt.sh/docopt-lib.sh"' lock-screen.sh`
+# docopt parser below, refresh this parser with `docopt.sh lock-screen`
+# shellcheck disable=2016,2086,2317,1090,1091,2034
+docopt() { source "$pkgroot/.upkg/docopt-lib.sh/docopt-lib.sh" '2.0.0' || {
+ret=$?;printf -- "exit %d\n" "$ret";exit "$ret";};set -e
+trimmed_doc=${DOC:0:634};usage=${DOC:51:54};digest=45a52;options=(' --key 1' \
+' --key-desc 1');node_0(){ value __key 0;};node_1(){ value __key_desc 1;}
+node_2(){ value USERNAME a;};node_3(){ value TIMEOUT a;};node_4(){ value \
+REASON a;};node_5(){ optional 0 1;};node_6(){ sequence 5 2 3 4;};cat <<<' \
+docopt_exit() { [[ -n $1 ]] && printf "%s\n" "$1" >&2;printf "%s\n" \
+"${DOC:51:54}" >&2;exit 1;}';local varnames=(__key __key_desc USERNAME TIMEOUT \
+REASON) varname;for varname in "${varnames[@]}"; do unset "var_$varname";done
+parse 6 "$@";local p=${DOCOPT_PREFIX:-''};for varname in "${varnames[@]}"; do
+unset "$p$varname";done;eval $p'__key=${var___key:-KEY_LEFTSHIFT};'$p'__key_de'\
+'sc=${var___key_desc:-shift};'$p'USERNAME=${var_USERNAME:-};'$p'TIMEOUT=${var_'\
+'TIMEOUT:-};'$p'REASON=${var_REASON:-};';local docopt_i=1;[[ $BASH_VERSION =~ \
+^4.3 ]] && docopt_i=2;for ((;docopt_i>0;docopt_i--)); do for varname in \
+"${varnames[@]}"; do declare -p "$p$varname";done;done;}
+# docopt parser above, complete command for generating this parser is `docopt.sh --library='"$pkgroot/.upkg/docopt-lib.sh/docopt-lib.sh"' lock-screen`
   eval "$(docopt "$@")"
 
   checkdeps evtest notify-send dbus-launch sudo

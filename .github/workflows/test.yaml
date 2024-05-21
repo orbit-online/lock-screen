@@ -1,0 +1,23 @@
+name: Test
+
+on:
+  push:
+    branches: ['*']
+    tags: ['!v*']
+  workflow_call: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
+      env:
+        SHELLCHECK_OPTS: -x
+      with:
+        ignore_paths: .upkg
+    - uses: orbit-online/upkg-install@v1
+    - name: Show --help menus
+      run: for cmd in bin/*; do "$cmd" --help; done

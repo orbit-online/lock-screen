@@ -4,11 +4,7 @@ A small tool to lock the screen unless a key is held
 
 ## Installation
 
-With [μpkg](https://github.com/orbit-online/upkg) as root (needed for keyboard access)
-
-```
-sudo upkg install -g orbit-online/lock-screen@<VERSION>
-```
+See [the latest release](https://github.com/orbit-online/lock-screen/releases/latest) for instructions.
 
 ## Dependencies
 

@@ -1,11 +1,21 @@
 {
-  "commands": {
-    "lock-screen": "lock-screen.sh"
-  },
-  "dependencies": {
-    "orbit-online/records.sh": "v0.9.5",
-    "orbit-online/checkdeps": "v1.0.2",
-    "andsens/docopt.sh": "v1.0.0-upkg",
-    "orbit-online/path-tools": "v0.2.1"
-  }
+  "name": "lock-screen",
+  "dependencies": [
+    {
+      "tar": "https://github.com/andsens/docopt.sh/releases/download/v2.0.0/docopt-lib.sh.tar.gz",
+      "sha256": "1d8b771418583cce2e6362c4c6b9a2cc506b241327424d5cc0b6fac8e8463806"
+    },
+    {
+      "tar": "https://github.com/orbit-online/checkdeps/releases/download/v2.0.0/checkdeps.tar.gz",
+      "sha256": "0b7ebb5e60163ccbd4966527f72c0e30f8cb183de6057ddad72b4e6b83ae1637"
+    },
+    {
+      "tar": "https://github.com/orbit-online/records.sh/releases/download/v1.0.0/records.sh.tar.gz",
+      "sha256": "0469f15f5b689cb29b30f2a3b233c61856eb209fc50c74ef141120bbf70697f1"
+    },
+    {
+      "tar": "https://github.com/orbit-online/path-tools/releases/download/v1.0.0/path-tools.tar.gz",
+      "sha256": "2ae2a98714aa81e2142b749dac9ecdb61e050e66bf8bd33aef0fccb2ce66c84b"
+    }
+  ]
 }
