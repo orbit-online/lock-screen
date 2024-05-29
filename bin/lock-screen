@@ -27,21 +27,22 @@ Note:
 "
 # docopt parser below, refresh this parser with `docopt.sh lock-screen`
 # shellcheck disable=2016,2086,2317,1090,1091,2034
-docopt() { source "$pkgroot/.upkg/docopt-lib.sh/docopt-lib.sh" '2.0.0' || {
-ret=$?;printf -- "exit %d\n" "$ret";exit "$ret";};set -e
-trimmed_doc=${DOC:0:634};usage=${DOC:51:54};digest=45a52;options=(' --key 1' \
-' --key-desc 1');node_0(){ value __key 0;};node_1(){ value __key_desc 1;}
-node_2(){ value USERNAME a;};node_3(){ value TIMEOUT a;};node_4(){ value \
-REASON a;};node_5(){ optional 0 1;};node_6(){ sequence 5 2 3 4;};cat <<<' \
-docopt_exit() { [[ -n $1 ]] && printf "%s\n" "$1" >&2;printf "%s\n" \
-"${DOC:51:54}" >&2;exit 1;}';local varnames=(__key __key_desc USERNAME TIMEOUT \
-REASON) varname;for varname in "${varnames[@]}"; do unset "var_$varname";done
-parse 6 "$@";local p=${DOCOPT_PREFIX:-''};for varname in "${varnames[@]}"; do
-unset "$p$varname";done;eval $p'__key=${var___key:-KEY_LEFTSHIFT};'$p'__key_de'\
-'sc=${var___key_desc:-shift};'$p'USERNAME=${var_USERNAME:-};'$p'TIMEOUT=${var_'\
-'TIMEOUT:-};'$p'REASON=${var_REASON:-};';local docopt_i=1;[[ $BASH_VERSION =~ \
-^4.3 ]] && docopt_i=2;for ((;docopt_i>0;docopt_i--)); do for varname in \
-"${varnames[@]}"; do declare -p "$p$varname";done;done;}
+docopt() { local v='2.0.1'; source \
+"$pkgroot/.upkg/docopt-lib.sh/docopt-lib.sh" "$v" || { ret=$?;printf -- "exit \
+%d\n" "$ret";exit "$ret";};set -e;trimmed_doc=${DOC:0:634};usage=${DOC:51:54}
+digest=45a52;options=(' --key 1' ' --key-desc 1');node_0(){ value __key 0;}
+node_1(){ value __key_desc 1;};node_2(){ value USERNAME a;};node_3(){ value \
+TIMEOUT a;};node_4(){ value REASON a;};node_5(){ optional 0 1;};node_6(){
+sequence 5 2 3 4;};cat <<<' docopt_exit() { [[ -n $1 ]] && printf "%s\n" "$1" \
+>&2;printf "%s\n" "${DOC:51:54}" >&2;exit 1;}';local varnames=(__key \
+__key_desc USERNAME TIMEOUT REASON) varname;for varname in "${varnames[@]}"; do
+unset "var_$varname";done;parse 6 "$@";local p=${DOCOPT_PREFIX:-''};for \
+varname in "${varnames[@]}"; do unset "$p$varname";done;eval $p'__key=${var___'\
+'key:-KEY_LEFTSHIFT};'$p'__key_desc=${var___key_desc:-shift};'$p'USERNAME=${va'\
+'r_USERNAME:-};'$p'TIMEOUT=${var_TIMEOUT:-};'$p'REASON=${var_REASON:-};';local \
+docopt_i=1;[[ $BASH_VERSION =~ ^4.3 ]] && docopt_i=2;for \
+((;docopt_i>0;docopt_i--)); do for varname in "${varnames[@]}"; do declare -p \
+"$p$varname";done;done;}
 # docopt parser above, complete command for generating this parser is `docopt.sh --library='"$pkgroot/.upkg/docopt-lib.sh/docopt-lib.sh"' lock-screen`
   eval "$(docopt "$@")"
 
