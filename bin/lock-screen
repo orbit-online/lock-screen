@@ -4,7 +4,6 @@
 lock_screen() {
   set -eo pipefail; shopt -s inherit_errexit
   local pkgroot; pkgroot=$(realpath "$(dirname "$(realpath "${BASH_SOURCE[0]}")")/..")
-  PATH=$("$pkgroot/.upkg/.bin/path_prepend" "$pkgroot/.upkg/.bin")
   # shellcheck disable=SC1091
   source "$pkgroot/.upkg/records.sh/records.sh"
 
@@ -46,7 +45,7 @@ docopt_i=1;[[ $BASH_VERSION =~ ^4.3 ]] && docopt_i=2;for \
 # docopt parser above, complete command for generating this parser is `docopt.sh --library='"$pkgroot/.upkg/docopt-lib.sh/docopt-lib.sh"' lock-screen`
   eval "$(docopt "$@")"
 
-  checkdeps evtest notify-send dbus-launch sudo
+  "$pkgroot/.upkg/.bin/checkdeps" evtest notify-send dbus-launch sudo
   NOTIFY_REPLACE_SUPPORTED=false
   if notify-send --help | grep -q replace-id; then
     debug "Notification IDs supported"
